@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   THE KINETIC TERMINAL — Design System
+   All tokens HSL. No ad-hoc colors in components.
+   ============================================ */
+
+@layer base {
+  :root {
+    /* Surfaces — tonal layering */
+    --background: 0 0% 7.5%;             /* #131313 */
+    --foreground: 120 15% 95%;           /* near-white w/ green cast */
+
+    --surface-dim: 0 0% 7.5%;            /* #131313 */
+    --surface-lowest: 0 0% 5.5%;         /* #0e0e0e */
+    --surface-low: 0 0% 10.6%;           /* #1b1b1b */
+    --surface: 0 0% 12.2%;               /* #1f1f1f */
+    --surface-high: 0 0% 16.5%;          /* #2a2a2a */
+    --surface-highest: 0 0% 20.8%;       /* #353535 */
+
+    --card: 0 0% 10.6%;
+    --card-foreground: 120 15% 95%;
+
+    --popover: 0 0% 12.2%;
+    --popover-foreground: 120 15% 95%;
+
+    /* Brand — neon active data */
+    --primary: 153 100% 50%;             /* #00ff9d */
+    --primary-foreground: 153 100% 11%;  /* #007143 */
+    --primary-glow: 153 100% 45%;        /* #00e38b */
+    --primary-fixed: 144 100% 67%;       /* #56ffa8 */
+
+    --secondary: 0 0% 16.5%;
+    --secondary-foreground: 120 15% 95%;
+
+    --muted: 0 0% 12.2%;
+    --muted-foreground: 132 13% 76%;     /* #b9cbbc */
+
+    --accent: 153 100% 50%;
+    --accent-foreground: 153 100% 11%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Borders — ghost only */
+    --border: 138 12% 26%;               /* #3b4a3f */
+    --input: 0 0% 5.5%;
+    --ring: 153 100% 50%;
+
+    --outline: 132 8% 55%;               /* #849587 */
+    --outline-variant: 138 12% 26%;
+
+    --radius: 0.375rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(153 100% 50%), hsl(153 100% 45%));
+    --gradient-radial-glow: radial-gradient(ellipse 80% 50% at 50% 0%, hsl(153 100% 50% / 0.15), transparent 70%);
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 10.6%), hsl(0 0% 7.5%));
+
+    /* Shadows — neon wash, no black */
+    --shadow-neon: 0 0 60px hsl(144 60% 71% / 0.08);
+    --shadow-neon-strong: 0 0 80px hsl(153 100% 50% / 0.18);
+    --shadow-lift: 0 1px 0 0 hsl(0 0% 100% / 0.04) inset;
+
+    /* Motion */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+    --sidebar-background: 0 0% 7.5%;
+    --sidebar-foreground: 132 13% 76%;
+    --sidebar-primary: 153 100% 50%;
+    --sidebar-primary-foreground: 153 100% 11%;
+    --sidebar-accent: 0 0% 12.2%;
+    --sidebar-accent-foreground: 120 15% 95%;
+    --sidebar-border: 138 12% 26%;
+    --sidebar-ring: 153 100% 50%;
+  }
+
+  .dark { /* same — site is dark-only */ }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    /* OLED noise overlay */
+    background-image:
+      radial-gradient(hsl(153 100% 50% / 0.025) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--surface-lowest)); }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--surface-high));
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.4); }
+}
+
+@layer components {
+  .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  .label-tech {
+    @apply font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground;
+  }
+
+  .glass-panel {
+    background: hsl(var(--surface) / 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--outline-variant) / 0.4);
+  }
+
+  .surface-low { background: hsl(var(--surface-low)); }
+  .surface-lowest { background: hsl(var(--surface-lowest)); }
+  .surface-high { background: hsl(var(--surface-high)); }
+
+  .tech-grid {
+    background-image:
+      linear-gradient(hsl(var(--outline-variant) / 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--outline-variant) / 0.15) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .pulse-dot {
+    @apply inline-block w-1.5 h-1.5 rounded-full bg-primary;
+    box-shadow: 0 0 8px hsl(var(--primary));
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ghost-border {
+    border: 1px solid hsl(var(--outline-variant) / 0.4);
+  }
+}
+
+@layer utilities {
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+}
+
+/* Keyframes */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(var(--primary)); }
+  50% { opacity: 0.6; box-shadow: 0 0 16px hsl(var(--primary)); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Custom cursor — hide native on desktop only */
+@media (hover: hover) and (pointer: fine) {
+  body.cursor-fx-active,
+  body.cursor-fx-active * {
+    cursor: none !important;
+  }
+}
